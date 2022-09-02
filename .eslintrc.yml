@@ -6,6 +6,8 @@ plugins:
 env:
   browser: true
   commonjs: true
+  jest: true
+  node: true
 
 extends:
   - 'airbnb-base'
