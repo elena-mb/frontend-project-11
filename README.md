@@ -1,3 +1,7 @@
 ### RSS aggregator
+
 [![Actions Status](https://github.com/elena-mb/frontend-project-11/workflows/hexlet-check/badge.svg)](https://github.com/elena-mb/frontend-project-11/actions)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a8f3640ffa4feafcddd3/maintainability)](https://codeclimate.com/github/elena-mb/frontend-project-11/maintainability)
+
+An RSS aggregator made for Hexlet's frontend developer courses.
+The goal of this project was to get better understandment of DOM manipulation, get expririence working with Bootstrap and Webpack, AJAX, data validation, and learn how to deploy a project.
