@@ -44,8 +44,8 @@
   "dependencies": {
     "autoprefixer": "^10.4.8",
     "bootstrap": "^5.2.0",
-    "npm-check": "^6.0.1",
     "precss": "^4.0.0",
-    "sass": "^1.39.0"
+    "sass": "^1.39.0",
+    "yup": "^0.32.11"
   }
 }
