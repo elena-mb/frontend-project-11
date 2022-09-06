@@ -1,34 +1,43 @@
-const changeInputStatus = (input, isValid) => {
-  if (!isValid) {
-    input.classList.add('is-invalid');
-  } else {
-    input.classList.remove('is-invalid');
-  }
-};
+import { INPUT_SUCCESS } from './constants/constants.js';
 
-const showFeedback = (element, isSuccessful, message) => {
-  if (isSuccessful) {
-    element.classList.remove('text-danger');
-    element.classList.add('text-success');
-  } else {
-    element.classList.remove('text-success');
-    element.classList.add('text-danger');
-  }
-  // eslint-disable-next-line no-param-reassign
-  element.textContent = message;
-};
+export default (state) => {
+  const {
+    rssForm: {
+      inputValue,
+      error,
+      state: formState,
+    },
+  } = state;
 
-const render = (state) => {
   const input = document.querySelector('#url-input');
   const feedback = document.querySelector('.feedback');
 
-  const { input: { value, isValid, feedbackMessage } } = state;
+  const renderFeedback = () => {
+    const message = formState === 'valid'
+      ? INPUT_SUCCESS
+      : error?.message ?? '';
 
-  changeInputStatus(input, isValid);
-  input.value = value;
-  input.focus();
+    if (formState === 'valid') {
+      feedback.classList.remove('text-danger');
+      feedback.classList.add('text-success');
+    } else if (formState === 'invalid') {
+      feedback.classList.remove('text-success');
+      feedback.classList.add('text-danger');
+    }
 
-  showFeedback(feedback, isValid, feedbackMessage);
+    feedback.textContent = message;
+  };
+
+  const renderInput = () => {
+    if (formState === 'invalid') {
+      input.classList.add('is-invalid');
+    } else {
+      input.classList.remove('is-invalid');
+    }
+    input.value = inputValue;
+    input.focus();
+  };
+
+  renderInput();
+  renderFeedback();
 };
-
-export default render;
