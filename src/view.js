@@ -1,4 +1,4 @@
-import { INPUT_SUCCESS } from './constants/constants.js';
+import i18n from './i18n.js';
 
 export default (state) => {
   const {
@@ -14,8 +14,8 @@ export default (state) => {
 
   const renderFeedback = () => {
     const message = formState === 'valid'
-      ? INPUT_SUCCESS
-      : error?.message ?? '';
+      ? i18n.t('success_message')
+      : i18n.t(error?.key) ?? '';
 
     if (formState === 'valid') {
       feedback.classList.remove('text-danger');

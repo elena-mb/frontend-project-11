@@ -1,10 +1,6 @@
-import { string } from 'yup';
 import onChange from 'on-change';
+import validateUrl from './utils/validateUrl.js';
 import render from './view.js';
-import {
-  INPUT_ERR_CONFLICT,
-  INPUT_ERR_INVALID,
-} from './constants/constants.js';
 
 export default () => {
   const state = {
@@ -31,14 +27,6 @@ export default () => {
     event.preventDefault();
     const { feedList, rssForm: { inputValue } } = state;
 
-    const validate = (value) => new Promise((resolve) => {
-      const urlScema = string()
-        .url(INPUT_ERR_INVALID)
-        .notOneOf(feedList, INPUT_ERR_CONFLICT);
-
-      resolve(urlScema.validate(value));
-    });
-
     const handleSuccess = (url) => {
       watchedState.rssForm.inputValue = '';
       watchedState.rssForm.state = 'valid';
@@ -51,10 +39,11 @@ export default () => {
       watchedState.rssForm.error = err;
     };
 
-    validate(inputValue).then((url) => {
+    validateUrl(inputValue, feedList).then((url) => {
       handleSuccess(url);
     }).catch((e) => {
-      handleError(e);
+      const [error] = e.errors.map(({ key }) => ({ key }));
+      handleError(error);
     });
   };
 
