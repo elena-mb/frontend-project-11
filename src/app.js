@@ -78,7 +78,7 @@ export default () => {
     };
 
     const addedFeeds = feedList.map(({ url }) => url);
-    validateUrl(inputValue, addedFeeds)
+    validateUrl(inputValue.trim(), addedFeeds)
       .then((url) => {
         handleLoading();
         return fetchFeed(url);
