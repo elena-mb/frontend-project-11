@@ -13,7 +13,8 @@ export default (uri) => (axios
     }
     return { url: uri, contents };
   }))
-  .catch(() => {
+  .catch((e) => {
+    console.log(JSON.stringify(e));
     const error = {
       errors: [{ key: 'ERR_INVALID_RSS' }],
     };
