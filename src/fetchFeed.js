@@ -1,6 +1,13 @@
 import axios from 'axios';
 
-export default (uri) => (axios(`https://allorigins.hexlet.app/get?url=${uri}&disableCache=true`)
+const getRoute = (url) => {
+  const result = new URL('/get', 'https://allorigins.hexlet.app');
+  result.searchParams.set('url', url);
+  result.searchParams.set('disableCache', 'true');
+  return result.toString();
+};
+
+export default (uri) => (axios(getRoute(uri))
   // .get(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(uri)}`)
   .then((response) => {
     const { contents, status: { content_type: contentType } } = response.data;
