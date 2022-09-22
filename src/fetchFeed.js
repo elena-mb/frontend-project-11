@@ -1,10 +1,13 @@
 import axios from 'axios';
 
-export default (uri) => (axios
-  .get(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(uri)}`)
+export default (uri) => (axios({
+  method: 'get',
+  url: `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(uri)}`,
+})
+  // .get(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(uri)}`)
   .then((response) => {
     const { contents, status: { content_type: contentType } } = response.data;
-    console.log(JSON.stringify(response));
+    console.log('response: ', JSON.stringify(response));
     if (!contentType.includes('application/rss+xml')) {
       const error = {
         errors: [{ key: 'ERR_INVALID_RSS' }],
@@ -14,7 +17,7 @@ export default (uri) => (axios
     return { url: uri, contents };
   }))
   .catch((e) => {
-    console.log(JSON.stringify(e));
+    console.log('error from fetch: ', JSON.stringify(e));
     const error = {
       errors: [{ key: 'ERR_INVALID_RSS' }],
     };
