@@ -4,6 +4,7 @@ const getRoute = (url) => {
   const result = new URL('/get', 'https://allorigins.hexlet.app');
   result.searchParams.set('url', url);
   result.searchParams.set('disableCache', 'true');
+  console.log(result.toString());
   return result.toString();
 };
 
