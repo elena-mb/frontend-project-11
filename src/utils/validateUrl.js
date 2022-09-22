@@ -3,10 +3,10 @@ import { string, setLocale } from 'yup';
 export default (value, forbiddenValues) => new Promise((resolve) => {
   setLocale({
     mixed: {
-      notOneOf: () => ({ key: 'err_conflict' }),
+      notOneOf: () => ({ key: 'ERR_CONFLICT' }),
     },
     string: {
-      url: () => ({ key: 'err_invalid' }),
+      url: () => ({ key: 'ERR_INVALID_URL' }),
     },
   });
   const urlScema = string()

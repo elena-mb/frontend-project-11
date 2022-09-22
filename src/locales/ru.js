@@ -1,7 +1,12 @@
 export default {
   translation: {
-    success_message: 'RSS успешно загружен',
-    err_conflict: 'RSS уже существует',
-    err_invalid: 'Ссылка должна быть валидным URL',
+    SUCCESS_MESSAGE: 'RSS успешно загружен',
+    ERR_CONFLICT: 'RSS уже существует',
+    ERR_INVALID_URL: 'Ссылка должна быть валидным URL',
+    ERR_INVALID_RSS: 'Ресурс не содержит валидный RSS',
+    ERR_NETWORK: 'Ошибка сети',
+    posts: 'Посты',
+    feeds: 'Фиды',
+    showMore: 'Просмотр',
   },
 };
