@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default (uri) => (axios({
   method: 'get',
-  url: `https://allorigins.hexlet.app/get?url=${encodeURIComponent(uri)}&disableCache=true`,
+  url: `https://allorigins.hexlet.app/get?url=${uri}&disableCache=true`,
 })
   // .get(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(uri)}`)
   .then((response) => {
