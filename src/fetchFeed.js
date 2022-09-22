@@ -1,9 +1,6 @@
 import axios from 'axios';
 
-export default (uri) => (axios({
-  method: 'get',
-  url: `https://allorigins.hexlet.app/get?url=${uri}&disableCache=true`,
-})
+export default (uri) => (axios(`https://allorigins.hexlet.app/get?url=${uri}&disableCache=true`)
   // .get(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(uri)}`)
   .then((response) => {
     const { contents, status: { content_type: contentType } } = response.data;
