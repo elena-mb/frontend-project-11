@@ -60,7 +60,7 @@ export default () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const { feedList, rssForm: { inputValue } } = state;
-
+    console.log(state);
     const handleError = (err) => {
       watchedState.rssForm.state = 'invalid';
       watchedState.rssForm.error = err;
