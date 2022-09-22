@@ -60,7 +60,7 @@ export default () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const { feedList, rssForm: { inputValue } } = state;
-    console.log(state);
+    console.log(state.rssForm.error, state.rssForm.inputValue);
     const handleError = (err) => {
       watchedState.rssForm.state = 'invalid';
       watchedState.rssForm.error = err;
@@ -94,6 +94,7 @@ export default () => {
         watchedState.posts.push(...mappedPosts);
       })
       .catch((e) => {
+        console.log(e);
         if (e.code === 'ERR_NETWORK') {
           const error = { key: e.code };
           handleError(error);
