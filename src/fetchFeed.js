@@ -9,7 +9,6 @@ const getRoute = (url) => {
 };
 
 export default (uri) => (axios(getRoute(uri))
-  // .get(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(uri)}`)
   .then((response) => {
     const { contents, status: { content_type: contentType } } = response.data;
     console.log('response: ', JSON.stringify(response));
@@ -20,11 +19,11 @@ export default (uri) => (axios(getRoute(uri))
       throw error;
     }
     return { url: uri, contents };
-  }))
-  .catch((e) => {
-    console.log('error from fetch: ', JSON.stringify(e));
-    const error = {
-      errors: [{ key: 'ERR_INVALID_RSS' }],
-    };
-    throw error;
-  });
+  }));
+// .catch((e) => {
+//   console.log('error from fetch: ', JSON.stringify(e));
+//   const error = {
+//     errors: [{ key: 'ERR_INVALID_RSS' }],
+//   };
+//   throw error;
+// });
