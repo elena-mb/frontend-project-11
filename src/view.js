@@ -1,7 +1,7 @@
 import i18n from './i18n.js';
 import createElement from './utils/createElement.js';
 
-export default (state) => {
+export default (state, readPost) => {
   const {
     rssForm: {
       inputValue,
@@ -10,6 +10,7 @@ export default (state) => {
     },
     feeds,
     posts,
+    readPosts,
   } = state;
 
   const modal = document.querySelector('#modal');
@@ -98,16 +99,19 @@ export default (state) => {
         'align-items-start',
         'border-0',
         'border-end-0']);
-      const postName = createElement('a', ['fw-bold'], title, {
+
+      const classNames = readPosts.includes(id)
+        ? ['fw-normal', 'link-secondary']
+        : ['fw-bold'];
+
+      const postName = createElement('a', classNames, title, {
         href: link,
         'data-id': id,
         target: '_blank',
         rel: 'noopener noreferrer',
       });
       postName.addEventListener('click', () => {
-        // postName.setAttribute('visited', true);
-        postName.classList.remove('fw-bold');
-        postName.classList.add('fw-normal', 'link-secondary');
+        readPost(id);
       });
       const button = createElement('button', [
         'btn',
@@ -118,9 +122,8 @@ export default (state) => {
         'data-bs-target': '#modal',
       });
       button.addEventListener('click', () => {
-        postName.classList.remove('fw-bold');
-        postName.classList.add('fw-normal', 'link-secondary');
-      }); // after rerendering these classes change back. fix it !!!
+        readPost(id);
+      });
       liElement.appendChild(postName);
       liElement.appendChild(button);
       list.appendChild(liElement);

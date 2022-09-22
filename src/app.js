@@ -17,6 +17,13 @@ export default () => {
     feedList: [],
     feeds: [],
     posts: [],
+    readPosts: [],
+  };
+
+  // to be able to change the posts' state in the view
+  const readPost = (postId) => {
+    // eslint-disable-next-line no-use-before-define
+    watchedState.readPosts.push(postId);
   };
 
   const watchedState = onChange(state, (path) => {
@@ -33,13 +40,14 @@ export default () => {
                 return { feedId, id, ...post };
               });
               watchedState.posts.unshift(...mappedPosts);
-            }).catch((e) => console.log(e));
+            }).catch((e) => console.log(e)); // !!!!
           setTimeout(checkUpdates, 3000);
         };
         setTimeout(checkUpdates, 3000);
       });
     }
-    render(state);
+
+    render(state, readPost);
   });
 
   const form = document.querySelector('form');
@@ -86,7 +94,6 @@ export default () => {
         watchedState.posts.push(...mappedPosts);
       })
       .catch((e) => {
-        console.log(e);
         if (e.code === 'ERR_NETWORK') {
           const error = { key: e.code };
           handleError(error);
