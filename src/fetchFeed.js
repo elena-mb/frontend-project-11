@@ -8,18 +8,18 @@ const getRoute = (url) => {
   return result.toString();
 };
 
-export default (uri) => (axios.get(getRoute(uri)) // error happens here ??
-  .then((response) => {
-    console.log('response: ', response.data);
-    const { contents, status: { content_type: contentType } } = response.data;
+export default (link) => (axios.get(getRoute(link)) // error happens here ??
+  .then(({ data }) => {
+    console.log('response: ', data);
+    const { contents } = data;
     // console.log('response: ', JSON.stringify(response));
-    if (!contentType.includes('application/rss+xml')) {
+    if (!contents.includes('xml')) {
       const error = {
         errors: [{ key: 'ERR_INVALID_RSS' }],
       };
       throw error;
     }
-    return { url: uri, contents };
+    return { url: link, contents };
   }))
   .catch((e) => {
     console.log('error from fetch: ', e);
