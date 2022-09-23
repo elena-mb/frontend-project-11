@@ -10,8 +10,9 @@ const getRoute = (url) => {
 
 export default (uri) => (axios.get(getRoute(uri)) // error happens here ??
   .then((response) => {
+    console.log('response: ', response);
     const { contents, status: { content_type: contentType } } = response.data;
-    console.log('response: ', JSON.stringify(response));
+    // console.log('response: ', JSON.stringify(response));
     if (!contentType.includes('application/rss+xml')) {
       const error = {
         errors: [{ key: 'ERR_INVALID_RSS' }],
