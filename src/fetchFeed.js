@@ -19,11 +19,11 @@ export default (uri) => (axios.get(getRoute(uri)) // error happens here ??
       throw error;
     }
     return { url: uri, contents };
-  }));
-// .catch((e) => {
-//   console.log('error from fetch: ', JSON.stringify(e));
-//   const error = {
-//     errors: [{ key: 'ERR_INVALID_RSS' }],
-//   };
-//   throw error;
-// });
+  }))
+  .catch((e) => {
+    console.log('error from fetch: ', e);
+    const error = {
+      errors: [{ key: 'ERR_INVALID_RSS' }],
+    };
+    throw error;
+  });
