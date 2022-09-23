@@ -10,7 +10,7 @@ const getRoute = (url) => {
 
 export default (uri) => (axios.get(getRoute(uri)) // error happens here ??
   .then((response) => {
-    console.log('response: ', response);
+    console.log('response: ', response.data);
     const { contents, status: { content_type: contentType } } = response.data;
     // console.log('response: ', JSON.stringify(response));
     if (!contentType.includes('application/rss+xml')) {
