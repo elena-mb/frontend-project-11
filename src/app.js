@@ -94,7 +94,7 @@ export default () => {
         watchedState.posts.push(...mappedPosts);
       })
       .catch((e) => {
-        console.log(e.errors[0]);
+        console.log(JSON.stringify(e));
         if (e.code === 'ERR_NETWORK') {
           const error = { key: e.code };
           handleError(error);

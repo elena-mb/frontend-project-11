@@ -8,7 +8,7 @@ const getRoute = (url) => {
   return result.toString();
 };
 
-export default (uri) => (axios.get(getRoute(uri))
+export default (uri) => (axios.get(getRoute(uri)) // error happens here ??
   .then((response) => {
     const { contents, status: { content_type: contentType } } = response.data;
     console.log('response: ', JSON.stringify(response));
