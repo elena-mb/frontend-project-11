@@ -20,11 +20,11 @@ export default (link) => (axios.get(getRoute(link)) // error happens here ??
       throw error;
     }
     return { url: link, contents };
-  }))
-  .catch((e) => {
-    console.log('error from fetch: ', e);
-    const error = {
-      errors: [{ key: 'ERR_INVALID_RSS' }],
-    };
-    throw error;
-  });
+  }));
+// .catch((e) => {
+//   console.log('error from fetch: ', e);
+//   const error = {
+//     errors: [{ key: 'ERR_INVALID_RSS' }],
+//   };
+//   throw error;
+// });
