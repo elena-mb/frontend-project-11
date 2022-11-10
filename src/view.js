@@ -1,7 +1,7 @@
 import i18n from './i18n.js';
 import createElement from './utils/createElement.js';
 
-export default (state, readPost) => {
+export default (state) => {
   const {
     rssForm: {
       inputValue,
@@ -10,7 +10,6 @@ export default (state, readPost) => {
     },
     feeds,
     posts,
-    readPosts,
   } = state;
 
   const modal = document.querySelector('#modal');
@@ -59,7 +58,7 @@ export default (state, readPost) => {
     const card = createElement('div', ['card', 'border-0']);
 
     const cardBody = createElement('div', ['card-body']);
-    const cardTitle = createElement('div', ['card-title', 'h4'], i18n.t('feeds'));
+    const cardTitle = createElement('div', ['card-title', 'h4'], i18n.t('FEEDS'));
     cardBody.appendChild(cardTitle);
 
     const list = createElement('ul', ['list-group', 'border-0', 'rounded-0']);
@@ -82,7 +81,7 @@ export default (state, readPost) => {
     const card = createElement('div', ['card', 'border-0']);
 
     const cardBody = createElement('div', ['card-body']);
-    const cardTitle = createElement('div', ['card-title', 'h4'], i18n.t('posts'));
+    const cardTitle = createElement('div', ['card-title', 'h4'], i18n.t('POSTS'));
     cardBody.appendChild(cardTitle);
 
     const list = createElement('ul', ['list-group', 'border-0', 'rounded-0']);
@@ -90,19 +89,24 @@ export default (state, readPost) => {
     posts.forEach(({
       title,
       link,
-      id, /* pubDate, feedId, description */
+      id,
+      pubDate,
     }) => {
-      const liElement = createElement('li', [
+      const liElementClassNames = [
         'list-group-item',
         'd-flex',
         'justify-content-between',
         'align-items-start',
         'border-0',
-        'border-end-0']);
+        'border-end-0'];
+      const now = new Date();
+      const publicationDate = new Date(pubDate);
+      if (now.getTime() - publicationDate.getTime() <= 15000) {
+        liElementClassNames.push('new-post');
+      }
+      const liElement = createElement('li', liElementClassNames);
 
-      const classNames = readPosts.includes(id)
-        ? ['fw-normal', 'link-secondary']
-        : ['fw-bold'];
+      const classNames = ['fw-bold'];
 
       const postName = createElement('a', classNames, title, {
         href: link,
@@ -110,19 +114,13 @@ export default (state, readPost) => {
         target: '_blank',
         rel: 'noopener noreferrer',
       });
-      postName.addEventListener('click', () => {
-        readPost(id);
-      });
       const button = createElement('button', [
         'btn',
         'btn-outline-primary',
-        'btn-sm'], i18n.t('showMore'), {
+        'btn-sm'], i18n.t('SHOW_MORE'), {
         'data-id': id,
         'data-bs-toggle': 'modal',
         'data-bs-target': '#modal',
-      });
-      button.addEventListener('click', () => {
-        readPost(id);
       });
       liElement.appendChild(postName);
       liElement.appendChild(button);

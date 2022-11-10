@@ -1,11 +1,12 @@
-// import axios from 'axios';
 import onChange from 'on-change';
 import { uniqueId } from 'lodash';
 import parseFeed from './parseFeed.js';
 import fetchFeed from './fetchFeed.js';
 import validateUrl from './utils/validateUrl.js';
-import getNewPosts from './getNewPosts.js';
+import checkUpdates from './checkUpdates.js';
 import render from './view.js';
+import init from './init.js';
+import UPDATE_TIMEOUT from './constants/constants.js';
 
 export default () => {
   const state = {
@@ -17,74 +18,54 @@ export default () => {
     feedList: [],
     feeds: [],
     posts: [],
-    readPosts: [],
-  };
-
-  // to be able to change the posts' state in the view
-  const readPost = (postId) => {
-    // eslint-disable-next-line no-use-before-define
-    watchedState.readPosts.push(postId);
   };
 
   const watchedState = onChange(state, (path) => {
     if (path === 'rssForm.inputValue') return;
     if (path === 'feedList') {
       state.feedList.forEach(({ url, feedId }) => {
-        const checkUpdates = () => {
-          const lastUpdate = state.posts[0].pubDate;
-          getNewPosts(url, lastUpdate)
-            .then((posts) => {
-              if (posts.length < 1) return;
-              const mappedPosts = posts.map((post) => {
-                const id = uniqueId();
-                return { feedId, id, ...post };
-              });
-              watchedState.posts.unshift(...mappedPosts);
-            }).catch((e) => console.log(e)); // !!!!
-          setTimeout(checkUpdates, 3000);
-        };
-        setTimeout(checkUpdates, 3000);
+        setTimeout(() => checkUpdates(url, feedId, watchedState), UPDATE_TIMEOUT);
       });
     }
-
-    render(state, readPost);
+    render(state);
   });
 
   const form = document.querySelector('form');
   const input = document.querySelector('#url-input');
+  const example = document.querySelector('#example-link');
 
   const handleInputChange = (event) => {
     watchedState.rssForm.inputValue = event.target.value;
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    const { feedList, rssForm: { inputValue } } = state;
-    console.log(state.rssForm.error, state.rssForm.inputValue);
-    const handleError = (err) => {
+    const handleSubmitError = (err) => {
       watchedState.rssForm.state = 'invalid';
       watchedState.rssForm.error = err;
     };
 
-    const handleLoading = () => {
+    const handleSubmitLoading = () => {
       watchedState.rssForm.state = 'loading';
     };
 
-    const handleSuccess = (url) => {
+    const handleSubmitSuccess = (url) => {
       watchedState.rssForm.inputValue = '';
       watchedState.rssForm.state = 'valid';
       watchedState.rssForm.error = null;
       watchedState.feedList.push({ url, feedId: uniqueId() });
     };
 
+    const { feedList, rssForm: { inputValue } } = state;
     const addedFeeds = feedList.map(({ url }) => url);
+
+    event.preventDefault();
     validateUrl(inputValue.trim(), addedFeeds)
       .then((url) => {
-        handleLoading();
+        handleSubmitLoading();
         return fetchFeed(url);
       })
       .then(({ url, contents }) => {
-        handleSuccess(url);
+        handleSubmitSuccess(url);
         return parseFeed(contents, url);
       })
       .then(({ feed, posts }) => {
@@ -94,17 +75,26 @@ export default () => {
         watchedState.posts.push(...mappedPosts);
       })
       .catch((e) => {
-        console.log(JSON.stringify(e));
         if (e.code === 'ERR_NETWORK') {
           const error = { key: e.code };
-          handleError(error);
+          handleSubmitError(error);
         } else {
           const [error] = e.errors.map(({ key }) => ({ key }));
-          handleError(error);
+          handleSubmitError(error);
         }
       });
   };
 
+  const handleExampleClick = (e) => {
+    e.preventDefault();
+    const url = e.target.innerText;
+    input.value = url;
+    watchedState.rssForm.inputValue = url;
+    input.focus();
+  };
+
+  init();
   input.addEventListener('input', handleInputChange);
   form.addEventListener('submit', handleSubmit);
+  example.addEventListener('click', handleExampleClick);
 };

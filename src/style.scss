@@ -1,1 +1,18 @@
-@import "~bootstrap/scss/bootstrap";
+@import '~bootstrap/scss/bootstrap';
+
+a:visited {
+  color: gray !important;
+}
+
+@keyframes fade {
+  from {
+    background-color: $blue-300;
+  }
+  to {
+    background-color: none;
+  }
+}
+
+.new-post {
+  animation: fade 10s;
+}
