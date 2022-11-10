@@ -13,7 +13,7 @@ export default {
     INPUT_LABEL: 'Ссылка RSS',
     ADD_BTN: 'Добавить',
     EXAMPLE: 'Пример:',
-    CREDITS: 'Проект создала', // Created by
+    CREDITS: 'Проект создала',
     CLOSE_MODAL: 'Закрыть',
     READ: 'Читать полностью',
   },
