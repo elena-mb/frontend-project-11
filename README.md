@@ -6,3 +6,15 @@
 An RSS aggregator made for Hexlet's frontend developer courses.The goal of this project was to get better understanding of DOM manipulation, get experience working with Bootstrap and Webpack, AJAX, data validation, and learn how to deploy a project.
 
 You can checkout the demo version _[here](https://rss-aggregator-project-9psa48cgp-alena-mb.vercel.app/)_.
+
+### Installation
+
+```
+npm install
+```
+
+### Local setup
+
+```
+npm run serve
+```
