@@ -18,7 +18,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title"></h5>
+            <h2 class="modal-title h5"></h2>
             <button
               type="button"
               class="btn-close close"
@@ -34,10 +34,13 @@
               role="button"
               target="_blank"
               rel="noopener noreferrer"
-              >Читать полностью </a
-            ><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-              Закрыть
-            </button>
+            ></a
+            ><button
+              id="close-modal"
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            ></button>
           </div>
         </div>
       </div>
@@ -46,8 +49,8 @@
       <section class="container-fluid bg-dark p-5">
         <div class="row">
           <div class="col-md-10 col-lg-8 mx-auto text-white">
-            <h1 class="display-3">RSS агрегатор</h1>
-            <p class="lead">Начните читать RSS сегодня! Это легко, это красиво.</p>
+            <h1 class="display-3"></h1>
+            <p class="lead"></p>
             <form action class="text-body">
               <div class="row">
                 <div class="col">
@@ -60,10 +63,10 @@
                       aria-label="url"
                       class="form-control w-100"
                       type="text"
-                      placeholder="Ссылка RSS"
+                      placeholder=""
                       autocomplete="off"
                     />
-                    <label for="url-input">Ссылка RSS</label>
+                    <label for="url-input"></label>
                   </div>
                 </div>
 
@@ -72,13 +75,14 @@
                     type="submit"
                     aria-label="add"
                     class="btn btn-primary h-100 btn-lg px-sm-5"
-                  >
-                    Добавить
-                  </button>
+                  ></button>
                 </div>
               </div>
             </form>
-            <p class="mb-0 mt-2 text-muted">Пример: https://ru.hexlet.io/lessons.rss</p>
+            <p class="mb-0 mt-2 text-muted">
+              <span id="example"></span>
+              <a id="example-link" href="">https://ru.hexlet.io/lessons.rss</a>
+            </p>
             <p class="feedback m-0 position-absolute small"></p>
           </div>
         </div>
@@ -93,24 +97,10 @@
     <footer class="footer bg-light py-3 border-top">
       <div class="container">
         <div class="text-center">
-          Created by <a href="https://github.com/elena-mb" target="_blank">elena-mb</a>
+          <span id="credits"></span>
+          <a href="https://github.com/elena-mb" target="_blank">elena-mb</a>
         </div>
       </div>
     </footer>
   </body>
-
-  <script>
-    // if ('serviceWorker' in navigator) {
-    //   window.addEventListener('load', () => {
-    //     navigator.serviceWorker
-    //       .register('service-worker.js')
-    //       .then((registration) => {
-    //         console.log('Service Worker registered: ', registration);
-    //       })
-    //       .catch((registrationError) => {
-    //         console.error('Service Worker registration failed: ', registrationError);
-    //       });
-    //   });
-    // }
-  </script>
 </html>
